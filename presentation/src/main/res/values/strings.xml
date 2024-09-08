@@ -2,4 +2,7 @@
 <resources>
     <string name="registration_title">Регистрация</string>
     <string name="login_title">Вход</string>
+    <string name="number_or_email">Телефон или почта</string>
+    <string name="password">Пароль</string>
+    <string name="enter">Вход</string>
 </resources>

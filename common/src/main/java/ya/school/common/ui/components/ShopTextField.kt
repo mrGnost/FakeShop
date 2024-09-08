@@ -23,11 +23,12 @@ import ya.school.common.logic.util.Constants
 fun ShopTextField(
     text: String,
     onValueChanged: (String) -> Unit,
+    modifier: Modifier = Modifier,
     hint: String? = null,
     errorMessage: String? = null,
     mode: ShopTextFieldMode = ShopTextFieldMode.Normal
 ) {
-    var isHidden by remember { mutableStateOf(false) }
+    var isHidden by remember { mutableStateOf(mode == ShopTextFieldMode.Password) }
 
     TextField(
         value = text,
@@ -38,15 +39,17 @@ fun ShopTextField(
                 onSuccess = onValueChanged
             )
         },
+        modifier = modifier,
         maxLines = 1,
         placeholder = {
             hint?.let {
                 Text(text = it)
             }
         },
-        visualTransformation = when (mode) {
-            ShopTextFieldMode.Password -> PasswordVisualTransformation()
-            else -> VisualTransformation.None
+        visualTransformation = if (mode == ShopTextFieldMode.Password && isHidden) {
+            PasswordVisualTransformation()
+        } else {
+            VisualTransformation.None
         },
         isError = errorMessage != null,
         supportingText = {
