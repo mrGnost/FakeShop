@@ -5,4 +5,5 @@
     <string name="number_or_email">Телефон или почта</string>
     <string name="password">Пароль</string>
     <string name="enter">Вход</string>
+    <string name="incorrect_email">Некорректный формат email</string>
 </resources>
