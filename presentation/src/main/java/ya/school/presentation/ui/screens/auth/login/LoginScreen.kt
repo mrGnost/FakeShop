@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ya.school.common.logic.navigation.NavEvent
 import ya.school.common.ui.components.ShopButton
 import ya.school.common.ui.components.ShopLoadingIndicator
 import ya.school.common.ui.components.ShopTextField
@@ -32,12 +33,19 @@ import ya.school.presentation.ui.screens.auth.login.states.LoginScreenState
 
 @Composable
 internal fun LoginScreen(
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel = viewModel(),
+    onNavEvent: (NavEvent) -> Unit = { }
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     val viewState by viewModel.viewStates().collectAsStateWithLifecycle()
     val viewAction by viewModel.viewActions().collectAsStateWithLifecycle()
+
+    onNavEvent(
+        NavEvent.ChangeTitle(
+            stringResource(id = R.string.login_title)
+        )
+    )
 
     LaunchedEffect(viewAction) {
         when (viewAction) {

@@ -14,6 +14,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import ya.school.common.logic.navigation.NavEvent
 import ya.school.common.ui.components.ShopTopBar
 import ya.school.presentation.R
 import ya.school.presentation.ui.screens.auth.login.LoginScreen
@@ -35,7 +37,14 @@ internal fun AuthScreen() {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            LoginScreen()
+            LoginScreen(
+                viewModel = hiltViewModel(),
+                onNavEvent = { event ->
+                    when (event) {
+                        is NavEvent.ChangeTitle -> title = event.title
+                    }
+                }
+            )
         }
     }
 }

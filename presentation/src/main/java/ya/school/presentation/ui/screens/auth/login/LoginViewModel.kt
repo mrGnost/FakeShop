@@ -2,7 +2,9 @@ package ya.school.presentation.ui.screens.auth.login
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import ya.school.common.logic.entity.DataResult
+import ya.school.common.logic.util.EmailUtil
 import ya.school.common.logic.viewmodel.BaseSharedViewModel
 import ya.school.domain.usecase.api.IAuthorizeUseCase
 import ya.school.presentation.ui.screens.auth.login.states.LoginAction
@@ -38,6 +40,12 @@ internal class LoginViewModel @Inject constructor(
     }
 
     private fun authorize(email: String, password: String) {
+        if (!EmailUtil.isValid(email)) {
+            currentScreenState.update {
+                it.copy(emailErrorShown = true)
+            }
+            return
+        }
         withViewModelScope {
             authorizeUseCase(email, password).let { result ->
                 viewAction = when (result) {
