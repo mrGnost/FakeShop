@@ -23,5 +23,5 @@ rootProject.name = "FakeShop"
 include(":app")
 include(":common")
 include(":domain")
-include(":repository")
+include(":data")
 include(":presentation")

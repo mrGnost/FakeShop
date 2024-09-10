@@ -1,4 +1,4 @@
-package ya.school.repository
+package ya.school.data
 
 import org.junit.Test
 

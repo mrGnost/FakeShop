@@ -1,4 +1,4 @@
-package ya.school.repository
+package ya.school.data
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
