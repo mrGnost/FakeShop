@@ -6,7 +6,7 @@ import ya.school.data.model.AuthDataDTO
 import ya.school.data.model.AuthTokenDTO
 import ya.school.data.network.ShopApi
 import ya.school.data.util.NetworkUtil
-import ya.school.domain.entity.DataResult
+import ya.school.common.logic.entity.DataResult
 import ya.school.domain.repository.INetworkRepository
 import javax.inject.Inject
 

@@ -1,7 +1,7 @@
 package ya.school.data.util
 
 import retrofit2.Response
-import ya.school.domain.entity.DataResult
+import ya.school.common.logic.entity.DataResult
 
 object NetworkUtil {
     suspend fun<K, R, T : Response<K>> getResponse(
