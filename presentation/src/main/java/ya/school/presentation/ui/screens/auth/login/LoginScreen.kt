@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -36,8 +34,6 @@ internal fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
     onNavEvent: (NavEvent) -> Unit = { }
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-
     val viewState by viewModel.viewStates().collectAsStateWithLifecycle()
     val viewAction by viewModel.viewActions().collectAsStateWithLifecycle()
 
@@ -51,8 +47,10 @@ internal fun LoginScreen(
         when (viewAction) {
             LoginAction.OpenProductsList -> Unit // TODO: navigation
             is LoginAction.ShowError -> {
-                snackbarHostState.showSnackbar(
-                    (viewAction as LoginAction.ShowError).message
+                onNavEvent(
+                    NavEvent.ShowSnackbar(
+                        (viewAction as LoginAction.ShowError).message
+                    )
                 )
             }
 

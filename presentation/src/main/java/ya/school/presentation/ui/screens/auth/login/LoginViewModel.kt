@@ -40,14 +40,15 @@ internal class LoginViewModel @Inject constructor(
     }
 
     private fun authorize(email: String, password: String) {
-        if (!EmailUtil.isValid(email)) {
+        val trimmedEmail = email.trim()
+        if (!EmailUtil.isValid(trimmedEmail)) {
             currentScreenState.update {
                 it.copy(emailErrorShown = true)
             }
             return
         }
         withViewModelScope {
-            authorizeUseCase(email, password).let { result ->
+            authorizeUseCase(trimmedEmail, password).let { result ->
                 viewAction = when (result) {
                     is DataResult.Error -> LoginAction.ShowError(result.message)
                     is DataResult.Success -> LoginAction.OpenProductsList

@@ -8,7 +8,7 @@ import ya.school.data.model.AuthTokenDTO
 
 interface ShopApi {
     @POST("users/auth/login")
-    fun login(
+    suspend fun login(
         @Body authData: AuthDataDTO
     ): Response<AuthTokenDTO>
 }
