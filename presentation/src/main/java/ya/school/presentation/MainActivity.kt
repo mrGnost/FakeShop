@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
 import ya.school.common.ui.theme.FakeShopTheme
-import ya.school.presentation.ui.screens.auth.AuthScreen
+import ya.school.presentation.ui.screens.MainHostScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FakeShopTheme {
-                AuthScreen()
+                MainHostScreen()
             }
         }
     }
