@@ -11,6 +11,7 @@ private val DarkColorScheme = darkColorScheme(
     background = Black,
     surface = Black,
     onPrimary = White,
+    onSecondary = Black,
     onSurface = White,
     onSurfaceVariant = GrayText,
     surfaceContainer = GrayBG
