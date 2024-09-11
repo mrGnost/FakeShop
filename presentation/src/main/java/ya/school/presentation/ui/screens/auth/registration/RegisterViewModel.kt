@@ -42,7 +42,12 @@ internal class RegisterViewModel @Inject constructor(
         }
     }
 
-    private fun registerUser(name: String, email: String, password: String, repeatedPassword: String) {
+    private fun registerUser(
+        name: String,
+        email: String,
+        password: String,
+        repeatedPassword: String
+    ) {
         val trimmedEmail = email.trim()
         if (!EmailUtil.isValid(trimmedEmail)) {
             currentScreenState.update {
