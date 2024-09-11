@@ -13,8 +13,10 @@ import ya.school.common.logic.navigation.ProductsHostRoute
 import ya.school.common.logic.navigation.ProductsListRoute
 import ya.school.common.logic.navigation.ProductsNavigationRoute
 import ya.school.common.logic.navigation.RegisterRoute
+import ya.school.common.logic.navigation.routers.IAuthNavRouter
 import ya.school.presentation.ui.screens.auth.AuthHostScreen
 import ya.school.presentation.ui.screens.auth.login.LoginScreen
+import ya.school.presentation.ui.screens.auth.registration.RegisterScreen
 import ya.school.presentation.ui.screens.products.ProductsHostScreen
 
 internal fun NavGraphBuilder.authNavigation(
@@ -35,9 +37,16 @@ internal fun NavGraphBuilder.authHostDestination(
     }
 }
 
-internal fun NavGraphBuilder.registerDestination() {
+internal fun NavGraphBuilder.registerDestination(
+    router: IAuthNavRouter,
+    onNavEvent: (NavEvent) -> Unit
+) {
     composable<RegisterRoute> {
-
+        RegisterScreen(
+            router = router,
+            viewModel = hiltViewModel(),
+            onNavEvent = onNavEvent
+        )
     }
 }
 

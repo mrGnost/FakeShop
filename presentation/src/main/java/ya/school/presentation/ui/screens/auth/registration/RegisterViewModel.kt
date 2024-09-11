@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.update
 import ya.school.common.logic.entity.DataResult
 import ya.school.common.logic.util.EmailUtil
 import ya.school.common.logic.viewmodel.BaseSharedViewModel
+import ya.school.domain.usecase.api.IGetTokenUseCase
 import ya.school.domain.usecase.api.IRegisterUseCase
 import ya.school.presentation.ui.screens.auth.registration.states.RegisterAction
 import ya.school.presentation.ui.screens.auth.registration.states.RegisterEvent
@@ -14,20 +15,32 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class RegisterViewModel @Inject constructor(
-    private val registerUseCase: IRegisterUseCase
+    private val registerUseCase: IRegisterUseCase,
+    private val getTokenUseCase: IGetTokenUseCase
 ) : BaseSharedViewModel<RegisterScreenState, RegisterAction, RegisterEvent>(
-    initialState = RegisterScreenState.Default
+    initialState = RegisterScreenState.Loading
 ) {
     private val currentScreenState = MutableStateFlow(RegisterScreenState.Default)
 
     init {
         subscribeOnScreenUpdates()
+        checkSavedToken()
     }
 
     private fun subscribeOnScreenUpdates() {
         withViewModelScope {
             currentScreenState.collect {
                 viewState = it
+            }
+        }
+    }
+
+    private fun checkSavedToken() {
+        withViewModelScope {
+            getTokenUseCase()?.let {
+                viewAction = RegisterAction.OpenProductsScreen
+            } ?: currentScreenState.update {
+                RegisterScreenState.Default
             }
         }
     }

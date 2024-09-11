@@ -58,7 +58,10 @@ internal fun RegisterScreen(
                 )
             }
 
-            else -> Unit
+            RegisterAction.OpenProductsScreen -> onNavEvent(
+                NavEvent.NavigateToProducts
+            )
+            null -> Unit
         }
         viewAction?.let {
             viewModel.obtainEvent(RegisterEvent.ActionInvoked)
