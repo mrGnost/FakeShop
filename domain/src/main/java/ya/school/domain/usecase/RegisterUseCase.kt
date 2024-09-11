@@ -5,7 +5,7 @@ import ya.school.domain.repository.INetworkRepository
 import ya.school.domain.usecase.api.IRegisterUseCase
 import javax.inject.Inject
 
-class RegisterUseCase @Inject constructor(
+internal class RegisterUseCase @Inject constructor(
     private val networkRepository: INetworkRepository
 ) : IRegisterUseCase {
     override suspend operator fun invoke(
