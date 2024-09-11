@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import ya.school.common.logic.navigation.LoginRoute
 import ya.school.common.logic.navigation.NavEvent
+import ya.school.common.logic.navigation.RegisterRoute
 import ya.school.presentation.ui.navigation.loginDestination
 import ya.school.presentation.ui.navigation.registerDestination
 import ya.school.presentation.ui.navigation.routers.AuthNavRouter
@@ -16,8 +17,11 @@ internal fun AuthHostScreen(
     val controller = rememberNavController()
     val router = AuthNavRouter(controller)
 
-    NavHost(navController = controller, startDestination = LoginRoute) {
-        registerDestination()
+    NavHost(navController = controller, startDestination = RegisterRoute) {
+        registerDestination(
+            router = router,
+            onNavEvent = onNavEvent
+        )
         loginDestination(
             onNavEvent = onNavEvent
         )
