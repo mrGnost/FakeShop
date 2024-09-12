@@ -15,4 +15,5 @@
     <string name="fresh">Свежее</string>
     <string name="nearby">Рядом</string>
     <string name="buy">Купить</string>
+    <string name="show_with_count">Показать по</string>
 </resources>

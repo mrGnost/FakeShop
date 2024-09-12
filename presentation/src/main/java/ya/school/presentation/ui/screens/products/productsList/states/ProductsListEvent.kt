@@ -14,4 +14,8 @@ internal sealed class ProductsListEvent {
     data class TabClicked(
         val tabIndex: Int
     ) : ProductsListEvent()
+
+    data class PagingLimitChanged(
+        val limit: Int
+    ) : ProductsListEvent()
 }

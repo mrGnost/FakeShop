@@ -1,6 +1,15 @@
 package ya.school.presentation.ui.screens.products.productsList
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -9,10 +18,14 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,6 +39,7 @@ import ya.school.common.logic.navigation.NavEvent
 import ya.school.common.logic.navigation.routers.IProductsNavRouter
 import ya.school.common.ui.components.CategoryCard
 import ya.school.common.ui.components.ProductCard
+import ya.school.common.ui.components.ShopButton
 import ya.school.common.ui.components.ShopLoadingIndicator
 import ya.school.common.ui.components.ShopTabRow
 import ya.school.domain.entity.ProductShort
@@ -83,43 +97,54 @@ private fun Data(
 ) {
     val productItems = products?.collectAsLazyPagingItems()
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(32.dp),
+    Column(
         modifier = Modifier
-            .padding(top = 32.dp)
+            .fillMaxSize()
     ) {
-        item(span = { GridItemSpan(2) }) {
-            CategoriesList(onEvent = onEvent)
-        }
-        item(span = { GridItemSpan(2) }) {
-            ShopTabRow(
-                tabIndex = selectedTabIndex,
-                tabLabels = listOf(
-                    stringResource(id = R.string.recommendations),
-                    stringResource(id = R.string.fresh),
-                    stringResource(id = R.string.nearby)
-                ),
-                onIndexChange = { onEvent(ProductsListEvent.TabClicked(it)) }
-            )
-        }
-        productItems?.let { products ->
-            items(
-                products.itemCount,
-                key = products.itemKey { it.id },
-                span = { GridItemSpan(1) }
-            ) { index ->
-                products[index]?.run {
-                    ProductCard(
-                        imagePath = imageUrl,
-                        name = name,
-                        price = price,
-                        priceDiscounted = priceDiscounted,
-                        onClick = { onEvent(ProductsListEvent.ProductClicked(id)) }
-                    )
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(32.dp),
+            modifier = Modifier
+                .padding(top = 32.dp)
+                .weight(1f)
+        ) {
+            item(span = { GridItemSpan(2) }) {
+                CategoriesList(onEvent = onEvent)
+            }
+            item(span = { GridItemSpan(2) }) {
+                ShopTabRow(
+                    tabIndex = selectedTabIndex,
+                    tabLabels = listOf(
+                        stringResource(id = R.string.recommendations),
+                        stringResource(id = R.string.fresh),
+                        stringResource(id = R.string.nearby)
+                    ),
+                    onIndexChange = { onEvent(ProductsListEvent.TabClicked(it)) }
+                )
+            }
+            productItems?.let { products ->
+                items(
+                    products.itemCount,
+                    key = products.itemKey { it.id },
+                    span = { GridItemSpan(1) }
+                ) { index ->
+                    products[index]?.run {
+                        ProductCard(
+                            imagePath = imageUrl,
+                            name = name,
+                            price = price,
+                            priceDiscounted = priceDiscounted,
+                            onClick = { onEvent(ProductsListEvent.ProductClicked(id)) },
+                            modifier = Modifier
+                                .padding(16.dp)
+                        )
+                    }
                 }
             }
+        }
+        ItemsPerPagePicker {
+            onEvent(ProductsListEvent.PagingLimitChanged(it))
         }
     }
 
@@ -133,6 +158,7 @@ private fun CategoriesList(
         rows = StaggeredGridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalItemSpacing = 8.dp,
+        contentPadding = PaddingValues(16.dp),
         modifier = Modifier
             .height(256.dp)
     ) {
@@ -142,5 +168,52 @@ private fun CategoriesList(
                 onClick = { onEvent(ProductsListEvent.CategoryClicked(it.code)) }
             )
         }
+    }
+}
+
+@Composable
+private fun ItemsPerPagePicker(
+    onPick: (Int) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        ItemsPerPageButton(text = stringResource(id = R.string.show_with_count)) { }
+        Spacer(modifier = Modifier.weight(1f))
+        ItemsPerPageButton("10") {
+            onPick(10)
+        }
+        ItemsPerPageButton("20") {
+            onPick(20)
+        }
+        ItemsPerPageButton("30") {
+            onPick(30)
+        }
+    }
+}
+
+@Composable
+private fun ItemsPerPageButton(
+    text: String,
+    onClick: () -> Unit
+) {
+    val shape = RoundedCornerShape(16.dp)
+    Box(
+        modifier = Modifier
+            .clickable { onClick() }
+            .clip(shape)
+            .background(
+                color = MaterialTheme.colorScheme.tertiary,
+                shape = shape
+            )
+            .padding(8.dp)
+    ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onSecondary
+        )
     }
 }
