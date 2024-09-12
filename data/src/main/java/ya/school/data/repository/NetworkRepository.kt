@@ -52,7 +52,8 @@ internal class NetworkRepository @Inject constructor(
 
     override suspend fun getProducts(
         limit: Int,
-        category: String?
+        category: String?,
+        sort: String?
     ): Flow<PagingData<ProductShort>> = Pager(
         PagingConfig(
             pageSize = limit,
@@ -62,7 +63,8 @@ internal class NetworkRepository @Inject constructor(
         ShopPagingSource(
             shopApi = api,
             mapper = mapper,
-            category = category
+            category = category,
+            sort = sort
         )
     }.flow
 

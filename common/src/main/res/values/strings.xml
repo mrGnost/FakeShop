@@ -4,4 +4,7 @@
     <string name="clothes">Одежда</string>
     <string name="furniture">Мебель</string>
     <string name="error">Возникла ошибка при загрузке</string>
+    <string name="no_sorting">Не сортировать</string>
+    <string name="ascending_sorting">По возрастанию цены</string>
+    <string name="descending_sorting">По убыванию цены</string>
 </resources>

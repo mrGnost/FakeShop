@@ -42,6 +42,7 @@ import ya.school.common.ui.components.ProductCard
 import ya.school.common.ui.components.ShopErrorScreen
 import ya.school.common.ui.components.ShopLoadingIndicator
 import ya.school.common.ui.components.ShopTabRow
+import ya.school.common.ui.components.SortingPicker
 import ya.school.domain.entity.ProductShort
 import ya.school.presentation.R
 import ya.school.presentation.ui.screens.products.productsList.states.ProductsListAction
@@ -104,12 +105,17 @@ private fun Data(
         modifier = Modifier
             .fillMaxSize()
     ) {
+        SortingPicker(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            onEvent(ProductsListEvent.SortingMethodChanged(it))
+        }
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalArrangement = Arrangement.spacedBy(32.dp),
             modifier = Modifier
-                .padding(top = 32.dp)
                 .weight(1f)
         ) {
             item(span = { GridItemSpan(2) }) {

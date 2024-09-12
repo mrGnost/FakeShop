@@ -15,7 +15,8 @@ import java.io.IOException
 internal class ShopPagingSource(
     private val shopApi: ShopApi,
     private val mapper: DTOMappers,
-    private val category: String? = null
+    private val category: String? = null,
+    private val sort: String? = null
 ) : PagingSource<Int, ProductShort>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductShort> =
         withContext(Dispatchers.IO) {
@@ -27,6 +28,7 @@ internal class ShopPagingSource(
                 ) {
                     shopApi.getProducts(
                         category = category,
+                        sort = sort,
                         limit = params.loadSize,
                         page = pageNumber
                     )

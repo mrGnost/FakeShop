@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import ya.school.common.logic.entity.SortingMethod
 import ya.school.common.logic.viewmodel.BaseSharedViewModel
 import ya.school.domain.usecase.api.IGetProductsUseCase
 import ya.school.presentation.ui.screens.products.productsList.states.ProductsListAction
@@ -20,16 +22,31 @@ internal class ProductsListViewModel @Inject constructor(
 ) {
     private val currentScreenState = MutableStateFlow(ProductsListScreenState.Default)
     private val pickedLimit = MutableStateFlow(20)
+    private val pickedSortingMethod = MutableStateFlow(SortingMethod.None)
 
     init {
         subscribeOnScreenUpdates()
         loadData()
+        subscribeOnSortingPropertiesUpdates()
     }
 
     private fun subscribeOnScreenUpdates() {
         withViewModelScope {
             currentScreenState.collect {
                 viewState = it
+            }
+        }
+    }
+
+    private fun subscribeOnSortingPropertiesUpdates() {
+        withViewModelScope {
+            combine(pickedLimit, pickedSortingMethod) { limit, sortingMethod ->
+                limit to sortingMethod
+            }.collect {
+                loadData(
+                    limit = it.first,
+                    sortingMethod = it.second
+                )
             }
         }
     }
@@ -47,22 +64,24 @@ internal class ProductsListViewModel @Inject constructor(
             }
 
             is ProductsListEvent.TabClicked -> switchTab(viewEvent.tabIndex)
-            is ProductsListEvent.PagingLimitChanged -> loadData(
-                null,
-                viewEvent.limit
-            )
+            is ProductsListEvent.PagingLimitChanged -> pickedLimit.update { viewEvent.limit }
 
             ProductsListEvent.RetryInvoked -> loadData(limit = pickedLimit.value)
+            is ProductsListEvent.SortingMethodChanged -> pickedSortingMethod.update { viewEvent.sortingMethod }
         }
     }
 
-    private fun loadData(category: String? = null, limit: Int = 20) {
+    private fun loadData(
+        category: String? = null,
+        limit: Int = 20,
+        sortingMethod: SortingMethod = SortingMethod.None
+    ) {
         viewState = ProductsListScreenState.Loading
-        pickedLimit.update { limit }
         withViewModelScope {
             getProductsUseCase(
                 category = category,
-                limit = limit
+                limit = limit,
+                sort = sortingMethod.request
             ).cachedIn(viewModelScope).let { flow ->
                 currentScreenState.update {
                     it.copy(products = flow)

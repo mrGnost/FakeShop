@@ -9,8 +9,6 @@ import retrofit2.http.Query
 import ya.school.data.model.AuthDataDTO
 import ya.school.data.model.AuthTokenDTO
 import ya.school.data.model.ProductFullContainerDTO
-import ya.school.data.model.ProductFullDTO
-import ya.school.data.model.ProductShortDTO
 import ya.school.data.model.ProductShortListDTO
 import ya.school.data.model.RegistrationDataDTO
 
@@ -29,7 +27,8 @@ internal interface ShopApi {
     suspend fun getProducts(
         @Query("category") category: String? = null,
         @Query("limit") limit: Int? = null,
-        @Query("page") page: Int? = null
+        @Query("page") page: Int? = null,
+        @Query("sort") sort: String? = null
     ): Response<ProductShortListDTO>
 
     @GET("products/{id}")

@@ -18,7 +18,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ya.school.common.logic.navigation.NavEvent
 import ya.school.common.logic.navigation.routers.IProductsNavRouter
-import ya.school.common.logic.util.PriceUtil
 import ya.school.common.ui.components.PriceBlock
 import ya.school.common.ui.components.ShopButton
 import ya.school.common.ui.components.ShopCarousel
@@ -68,6 +67,7 @@ internal fun ProductInfoScreen(
         ProductInfoScreenState.Error -> ShopErrorScreen {
             viewModel.obtainEvent(ProductInfoEvent.LoadProduct(productId))
         }
+
         ProductInfoScreenState.Loading -> ShopLoadingIndicator()
     }
 }
@@ -81,12 +81,14 @@ private fun Data(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        ShopCarousel(
-            data = product.imagesUrl,
-            modifier = Modifier
-                .height(256.dp)
-        ) {
-            ShopImage(imagePath = it)
+        if (product.imagesUrl.isNotEmpty()) {
+            ShopCarousel(
+                data = product.imagesUrl,
+                modifier = Modifier
+                    .height(256.dp)
+            ) {
+                ShopImage(imagePath = it)
+            }
         }
         Column(
             modifier = Modifier
