@@ -34,12 +34,12 @@ internal fun MainHostScreen() {
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
-    var title by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf<String?>(null) }
 
     Scaffold(
         topBar = {
-            if (title.isNotBlank()) {
-                ShopTopBar(text = title)
+            title?.let {
+                ShopTopBar(text = it)
             }
         },
         snackbarHost = {

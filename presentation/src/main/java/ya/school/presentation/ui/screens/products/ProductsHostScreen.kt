@@ -17,7 +17,10 @@ internal fun ProductsHostScreen(
     val router = ProductsNavRouter(controller)
 
     NavHost(navController = controller, startDestination = ProductsListRoute) {
-        productsListDestination()
+        productsListDestination(
+            router = router,
+            onNavEvent = onNavEvent
+        )
         productInfoDestination()
     }
 }
