@@ -12,6 +12,8 @@ internal sealed class ProductsListScreenState {
 
     data object Loading : ProductsListScreenState()
 
+    data object Error : ProductsListScreenState()
+
     companion object {
         val Default = Data(null, 0)
     }
