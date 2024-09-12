@@ -15,11 +15,11 @@ import ya.school.common.logic.util.PriceUtil
 
 @Composable
 fun ProductCard(
-    imagePath: String,
     name: String,
     price: Int,
     priceDiscounted: Int,
     modifier: Modifier = Modifier,
+    imagePath: String? = null,
     onClick: () -> Unit
 ) {
     Column(

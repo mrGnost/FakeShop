@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -18,6 +17,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
+import kotlinx.coroutines.flow.Flow
 import ya.school.common.logic.entity.Category
 import ya.school.common.logic.navigation.NavEvent
 import ya.school.common.logic.navigation.routers.IProductsNavRouter
@@ -74,10 +77,12 @@ internal fun ProductsListScreen(
 
 @Composable
 private fun Data(
-    products: List<ProductShort>,
+    products: Flow<PagingData<ProductShort>>? = null,
     selectedTabIndex: Int,
     onEvent: (ProductsListEvent) -> Unit
 ) {
+    val productItems = products?.collectAsLazyPagingItems()
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -99,14 +104,22 @@ private fun Data(
                 onIndexChange = { onEvent(ProductsListEvent.TabClicked(it)) }
             )
         }
-        items(products, span = { GridItemSpan(1) }) {
-            ProductCard(
-                imagePath = it.imageUrl,
-                name = it.name,
-                price = it.price,
-                priceDiscounted = it.priceDiscounted,
-                onClick = { onEvent(ProductsListEvent.ProductClicked(it.id)) }
-            )
+        productItems?.let { products ->
+            items(
+                products.itemCount,
+                key = products.itemKey { it.id },
+                span = { GridItemSpan(1) }
+            ) { index ->
+                products[index]?.run {
+                    ProductCard(
+                        imagePath = imageUrl,
+                        name = name,
+                        price = price,
+                        priceDiscounted = priceDiscounted,
+                        onClick = { onEvent(ProductsListEvent.ProductClicked(id)) }
+                    )
+                }
+            }
         }
     }
 

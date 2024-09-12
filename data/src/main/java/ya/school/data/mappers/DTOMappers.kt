@@ -17,7 +17,7 @@ internal class DTOMappers @Inject constructor() {
             name = name,
             price = price,
             priceDiscounted = priceDiscounted,
-            imageUrl = images.first()
+            imageUrl = images.firstOrNull()
         )
     }
 

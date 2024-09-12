@@ -1,5 +1,7 @@
 package ya.school.presentation.ui.screens.products.productsList
 
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -49,14 +51,9 @@ internal class ProductsListViewModel @Inject constructor(
         withViewModelScope {
             getProductsUseCase(
                 category = category
-            ).let { result ->
-                when (result) {
-                    is DataResult.Error -> viewAction = ProductsListAction.ShowError(result.message)
-                    is DataResult.Success -> {
-                        currentScreenState.update {
-                            it.copy(products = result.data)
-                        }
-                    }
+            ).cachedIn(viewModelScope).let { flow ->
+                currentScreenState.update {
+                    it.copy(products = flow)
                 }
             }
         }

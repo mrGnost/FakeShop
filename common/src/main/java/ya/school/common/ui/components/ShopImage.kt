@@ -15,8 +15,8 @@ import coil.request.ImageRequest
 
 @Composable
 fun ShopImage(
-    imagePath: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    imagePath: String? = null
 ) {
     Box(
         modifier = modifier
