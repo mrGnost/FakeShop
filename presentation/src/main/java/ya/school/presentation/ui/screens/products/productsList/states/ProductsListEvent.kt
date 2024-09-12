@@ -1,5 +1,7 @@
 package ya.school.presentation.ui.screens.products.productsList.states
 
+import ya.school.common.logic.entity.SortingMethod
+
 internal sealed class ProductsListEvent {
     data object ActionInvoked : ProductsListEvent()
 
@@ -20,4 +22,8 @@ internal sealed class ProductsListEvent {
     ) : ProductsListEvent()
 
     data object RetryInvoked : ProductsListEvent()
+
+    data class SortingMethodChanged(
+        val sortingMethod: SortingMethod
+    ) : ProductsListEvent()
 }

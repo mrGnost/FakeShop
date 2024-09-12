@@ -1,6 +1,5 @@
 package ya.school.domain.repository
 
-import androidx.paging.Pager
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ya.school.common.logic.entity.DataResult
@@ -22,7 +21,8 @@ interface INetworkRepository {
 
     suspend fun getProducts(
         limit: Int,
-        category: String? = null
+        category: String? = null,
+        sort: String? = null
     ): Flow<PagingData<ProductShort>>
 
     suspend fun getProductInfo(
