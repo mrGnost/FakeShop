@@ -4,6 +4,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.toRoute
 import ya.school.common.logic.navigation.AuthHostRoute
 import ya.school.common.logic.navigation.AuthNavigationRoute
 import ya.school.common.logic.navigation.LoginRoute
@@ -19,6 +20,7 @@ import ya.school.presentation.ui.screens.auth.AuthHostScreen
 import ya.school.presentation.ui.screens.auth.login.LoginScreen
 import ya.school.presentation.ui.screens.auth.registration.RegisterScreen
 import ya.school.presentation.ui.screens.products.ProductsHostScreen
+import ya.school.presentation.ui.screens.products.productInfo.ProductInfoScreen
 import ya.school.presentation.ui.screens.products.productsList.ProductsListScreen
 
 internal fun NavGraphBuilder.authNavigation(
@@ -94,8 +96,16 @@ internal fun NavGraphBuilder.productsListDestination(
     }
 }
 
-internal fun NavGraphBuilder.productInfoDestination() {
+internal fun NavGraphBuilder.productInfoDestination(
+    router: IProductsNavRouter,
+    onNavEvent: (NavEvent) -> Unit
+) {
     composable<ProductInfoRoute> {
-
+        ProductInfoScreen(
+            productId = it.toRoute<ProductInfoRoute>().id,
+            router = router,
+            viewModel = hiltViewModel(),
+            onNavEvent = onNavEvent
+        )
     }
 }

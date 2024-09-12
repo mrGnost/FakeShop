@@ -4,14 +4,17 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 import ya.school.data.model.AuthDataDTO
 import ya.school.data.model.AuthTokenDTO
+import ya.school.data.model.ProductFullContainerDTO
+import ya.school.data.model.ProductFullDTO
 import ya.school.data.model.ProductShortDTO
 import ya.school.data.model.ProductShortListDTO
 import ya.school.data.model.RegistrationDataDTO
 
-interface ShopApi {
+internal interface ShopApi {
     @POST("users/auth/login")
     suspend fun login(
         @Body authData: AuthDataDTO
@@ -28,4 +31,9 @@ interface ShopApi {
         @Query("limit") limit: Int? = null,
         @Query("page") page: Int? = null
     ): Response<ProductShortListDTO>
+
+    @GET("products/{id}")
+    suspend fun getProductInfo(
+        @Path("id") id: String
+    ): Response<ProductFullContainerDTO>
 }

@@ -3,4 +3,5 @@
     <string name="computers">Компьютеры</string>
     <string name="clothes">Одежда</string>
     <string name="furniture">Мебель</string>
+    <string name="error">Возникла ошибка при загрузке</string>
 </resources>

@@ -10,6 +10,7 @@ import ya.school.data.model.ProductShortDTO
 import ya.school.data.model.RegistrationDataDTO
 import ya.school.data.network.ShopApi
 import ya.school.data.util.NetworkUtil
+import ya.school.domain.entity.ProductFull
 import ya.school.domain.repository.INetworkRepository
 import javax.inject.Inject
 
@@ -54,6 +55,14 @@ internal class NetworkRepository @Inject constructor(
             mapper = mapper::productShortDTOListToDomain
         ) {
             api.getProducts(category, limit, page)
+        }
+    }
+
+    override suspend fun getProductInfo(id: String) = with(Dispatchers.IO) {
+        NetworkUtil.getResponse(
+            mapper = mapper::productFullDTOToDomain
+        ) {
+            api.getProductInfo(id)
         }
     }
 }

@@ -1,6 +1,7 @@
 package ya.school.domain.repository
 
 import ya.school.common.logic.entity.DataResult
+import ya.school.domain.entity.ProductFull
 import ya.school.domain.entity.ProductShort
 
 interface INetworkRepository {
@@ -21,4 +22,8 @@ interface INetworkRepository {
         limit: Int? = null,
         page: Int? = null
     ): DataResult<List<ProductShort>>
+
+    suspend fun getProductInfo(
+        id: String
+    ): DataResult<ProductFull>
 }

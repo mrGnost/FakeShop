@@ -14,7 +14,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
 @Composable
-internal fun ShopImage(
+fun ShopImage(
     imagePath: String,
     modifier: Modifier = Modifier
 ) {

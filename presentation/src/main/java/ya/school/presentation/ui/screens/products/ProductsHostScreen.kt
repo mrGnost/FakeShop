@@ -21,6 +21,9 @@ internal fun ProductsHostScreen(
             router = router,
             onNavEvent = onNavEvent
         )
-        productInfoDestination()
+        productInfoDestination(
+            router = router,
+            onNavEvent = onNavEvent
+        )
     }
 }

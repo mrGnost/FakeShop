@@ -1,6 +1,6 @@
 package ya.school.data.model
 
-data class AuthDataDTO(
+internal data class AuthDataDTO(
     val email: String,
     val password: String
 )

@@ -2,7 +2,7 @@ package ya.school.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class RegistrationDataDTO(
+internal data class RegistrationDataDTO(
     val name: String,
     val email: String,
     val password: String,
