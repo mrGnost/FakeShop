@@ -14,10 +14,12 @@ import ya.school.common.logic.navigation.ProductsListRoute
 import ya.school.common.logic.navigation.ProductsNavigationRoute
 import ya.school.common.logic.navigation.RegisterRoute
 import ya.school.common.logic.navigation.routers.IAuthNavRouter
+import ya.school.common.logic.navigation.routers.IProductsNavRouter
 import ya.school.presentation.ui.screens.auth.AuthHostScreen
 import ya.school.presentation.ui.screens.auth.login.LoginScreen
 import ya.school.presentation.ui.screens.auth.registration.RegisterScreen
 import ya.school.presentation.ui.screens.products.ProductsHostScreen
+import ya.school.presentation.ui.screens.products.productsList.ProductsListScreen
 
 internal fun NavGraphBuilder.authNavigation(
     content: NavGraphBuilder.() -> Unit
@@ -79,9 +81,16 @@ internal fun NavGraphBuilder.productsHostDestination(
     }
 }
 
-internal fun NavGraphBuilder.productsListDestination() {
+internal fun NavGraphBuilder.productsListDestination(
+    router: IProductsNavRouter,
+    onNavEvent: (NavEvent) -> Unit
+) {
     composable<ProductsListRoute> {
-
+        ProductsListScreen(
+            router = router,
+            viewModel = hiltViewModel(),
+            onNavEvent = onNavEvent
+        )
     }
 }
 

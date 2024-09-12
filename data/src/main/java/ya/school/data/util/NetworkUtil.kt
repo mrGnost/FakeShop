@@ -22,6 +22,7 @@ object NetworkUtil {
                 }
             }
         } catch (e: Exception) {
+            println(e.stackTraceToString())
             return DataResult.Error("Не удалось связаться с сервером...")
         }
     }

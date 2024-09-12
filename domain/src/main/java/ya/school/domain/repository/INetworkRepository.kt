@@ -1,6 +1,7 @@
 package ya.school.domain.repository
 
 import ya.school.common.logic.entity.DataResult
+import ya.school.domain.entity.ProductShort
 
 interface INetworkRepository {
     suspend fun login(
@@ -14,4 +15,10 @@ interface INetworkRepository {
         password: String,
         repeatedPassword: String
     ): DataResult<Unit>
+
+    suspend fun getProducts(
+        category: String? = null,
+        limit: Int? = null,
+        page: Int? = null
+    ): DataResult<List<ProductShort>>
 }

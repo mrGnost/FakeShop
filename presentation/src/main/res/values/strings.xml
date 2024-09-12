@@ -11,4 +11,7 @@
     <string name="enter">Вход</string>
     <string name="move_to_login">Войти</string>
     <string name="incorrect_email">Некорректный формат email</string>
+    <string name="recommendations">Рекомендации</string>
+    <string name="fresh">Свежее</string>
+    <string name="nearby">Рядом</string>
 </resources>
