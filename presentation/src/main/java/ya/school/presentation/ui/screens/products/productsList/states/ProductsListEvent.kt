@@ -18,4 +18,6 @@ internal sealed class ProductsListEvent {
     data class PagingLimitChanged(
         val limit: Int
     ) : ProductsListEvent()
+
+    data object RetryInvoked : ProductsListEvent()
 }

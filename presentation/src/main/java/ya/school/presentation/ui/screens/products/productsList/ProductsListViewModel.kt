@@ -51,10 +51,13 @@ internal class ProductsListViewModel @Inject constructor(
                 null,
                 viewEvent.limit
             )
+
+            ProductsListEvent.RetryInvoked -> loadData(limit = pickedLimit.value)
         }
     }
 
     private fun loadData(category: String? = null, limit: Int = 20) {
+        viewState = ProductsListScreenState.Loading
         pickedLimit.update { limit }
         withViewModelScope {
             getProductsUseCase(
