@@ -9,9 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import ya.school.common.R
 
 @Composable
 fun ShopImage(
@@ -27,9 +29,12 @@ fun ShopImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imagePath)
                 .crossfade(true)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
                 .build(),
+            placeholder = painterResource(id = R.drawable.placeholder),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             modifier = Modifier
                 .align(Alignment.Center)
         )
