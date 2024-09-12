@@ -45,7 +45,9 @@ internal fun LoginScreen(
 
     LaunchedEffect(viewAction) {
         when (viewAction) {
-            LoginAction.OpenProductsList -> Unit // TODO: navigation
+            LoginAction.OpenProductsList -> {
+                onNavEvent(NavEvent.NavigateToProducts)
+            }
             is LoginAction.ShowError -> {
                 onNavEvent(
                     NavEvent.ShowSnackbar(
