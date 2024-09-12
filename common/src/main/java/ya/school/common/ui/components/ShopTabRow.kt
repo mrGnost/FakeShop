@@ -2,6 +2,7 @@ package ya.school.common.ui.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -16,7 +17,7 @@ fun ShopTabRow(
     tabLabels: List<String>,
     onIndexChange: (Int) -> Unit
 ) {
-    TabRow(
+    ScrollableTabRow(
         selectedTabIndex = tabIndex,
         divider = { },
         indicator = { }
@@ -32,8 +33,8 @@ fun ShopTabRow(
             ) {
                 Text(
                     text = label,
-                    fontSize = 14.sp,
-                    lineHeight = 24.sp
+                    fontSize = 24.sp,
+                    lineHeight = 32.sp
                 )
             }
         }

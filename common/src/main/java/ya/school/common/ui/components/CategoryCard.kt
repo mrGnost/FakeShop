@@ -29,7 +29,7 @@ import ya.school.common.logic.entity.Category
 fun CategoryCard(
     category: Category,
     modifier: Modifier = Modifier,
-    minSize: Dp = 64.dp,
+    width: Dp = 160.dp,
     onClick: () -> Unit
 ) {
     val shape = RoundedCornerShape(32.dp)
@@ -41,8 +41,8 @@ fun CategoryCard(
                 color = MaterialTheme.colorScheme.surfaceContainer,
                 shape = shape
             )
-            .heightIn(min = minSize)
-            .widthIn(min = minSize)
+            .fillMaxHeight()
+            .widthIn(min = width)
             .clickable { onClick() }
     ) {
         Text(

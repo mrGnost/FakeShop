@@ -47,6 +47,8 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.okhttp.logging)
 
+    implementation(libs.androidx.paging.runtime)
+
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.datastore.preferences)
 
