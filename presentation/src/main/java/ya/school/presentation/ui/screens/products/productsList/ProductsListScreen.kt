@@ -119,7 +119,7 @@ private fun CategoriesList(
     LazyHorizontalStaggeredGrid(
         rows = StaggeredGridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalItemSpacing = 4.dp,
+        horizontalItemSpacing = 8.dp,
         modifier = Modifier
             .height(256.dp)
     ) {
