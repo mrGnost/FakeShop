@@ -23,26 +23,25 @@ internal class RegisterViewModel @Inject constructor(
     private val currentScreenState = MutableStateFlow(RegisterScreenState.Default)
 
     init {
-        subscribeOnScreenUpdates()
-        checkSavedToken()
-    }
-
-    private fun subscribeOnScreenUpdates() {
         withViewModelScope {
-            currentScreenState.collect {
-                viewState = it
+            if (!isTokenSaved()) {
+                subscribeOnScreenUpdates()
             }
         }
     }
 
-    private fun checkSavedToken() {
-        withViewModelScope {
-            getTokenUseCase()?.let {
-                viewAction = RegisterAction.OpenProductsScreen
-            } ?: currentScreenState.update {
-                RegisterScreenState.Default
-            }
+    private suspend fun subscribeOnScreenUpdates() {
+        currentScreenState.collect {
+            viewState = it
         }
+    }
+
+    private suspend fun isTokenSaved(): Boolean {
+        viewState = RegisterScreenState.Loading
+        return getTokenUseCase()?.let {
+            viewAction = RegisterAction.OpenProductsScreen
+            true
+        } ?: false
     }
 
     override fun obtainEvent(viewEvent: RegisterEvent) {
