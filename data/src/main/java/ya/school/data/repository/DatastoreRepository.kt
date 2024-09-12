@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -25,7 +24,7 @@ internal class DatastoreRepository @Inject constructor(
 
     override suspend fun getToken(): String? {
         return datastore.data.map { preferences ->
-            preferences[tokenKey] ?: ""
+            preferences[tokenKey]
         }.firstOrNull()
     }
 
