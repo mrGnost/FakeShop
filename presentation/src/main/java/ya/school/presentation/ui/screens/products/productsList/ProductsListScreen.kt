@@ -39,7 +39,7 @@ import ya.school.common.logic.navigation.NavEvent
 import ya.school.common.logic.navigation.routers.IProductsNavRouter
 import ya.school.common.ui.components.CategoryCard
 import ya.school.common.ui.components.ProductCard
-import ya.school.common.ui.components.ShopButton
+import ya.school.common.ui.components.ShopErrorScreen
 import ya.school.common.ui.components.ShopLoadingIndicator
 import ya.school.common.ui.components.ShopTabRow
 import ya.school.domain.entity.ProductShort
@@ -86,6 +86,9 @@ internal fun ProductsListScreen(
         )
 
         ProductsListScreenState.Loading -> ShopLoadingIndicator()
+        ProductsListScreenState.Error -> ShopErrorScreen {
+            viewModel.obtainEvent(ProductsListEvent.RetryInvoked)
+        }
     }
 }
 
